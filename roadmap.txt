@@ -1,2 +1,5 @@
 - v1 release:
-	ex
+ Text based version
+ Debug Mode
+ UI (hopefully)
+ Working 0-60 timer with quarter mile times and a way to save it	
