@@ -52,15 +52,17 @@ mph=0
 start_time = None
 
 z26lbl = Label(window, text="  Zero2Sixty Box", font=("Lato",20), fg="white",bg="black") # Zero2Sixty Box Label
-z26lbl.grid(column=1,row=1,padx=20,pady=20) 
+z26lbl.grid(column=1, row=1, padx=20, pady=20, sticky="w") 
+z26lbl.columnconfigure(1, weight=1)
 
-timelbl = Label(window, text="", font=("Lato",20), fg="white",bg="black",width=60) # Time Label
-timelbl.columnconfigure(0,weight=1)
-timelbl.rowconfigure(0,weight=1)
-timelbl.grid(row=1, column=2, sticky="w",padx=20, pady=20)
+timelbl = Label(window, text="", font=("Lato",20), fg="white",bg="black",width=45) # Time Label
+timelbl.columnconfigure(1,weight=0)
+timelbl.rowconfigure(1,weight=0)
+timelbl.grid(row=1, column=2,padx=20, pady=20, sticky="w")
 
-mphlbl = Label(window, text="",font=("Lato",60), fg="white",bg="black") # MPH Label
-mphlbl.grid(row=2,column=1,padx=20,pady=20)
+mphlbl = Label(window, text="",font=("Lato",60), fg="white",bg="black",width=7) # MPH Label
+mphlbl.grid(row=2,column=1,padx=20,pady=20, sticky="ew")
+
 
 timerlbl = Label(window, text="", font=("Lato",60), fg="white",bg="black")
 timerlbl.grid(row=2,column=2,padx=20,pady=20)
