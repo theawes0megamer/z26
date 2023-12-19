@@ -1,6 +1,7 @@
 from tkinter import *
 from datetime import datetime
 import time
+
 # create tkinter window
 window = Tk()
 
@@ -17,7 +18,7 @@ def update_time(): # Update the time in the UI
 def update_mph(): # Function to simulate 0-60
     global mph  
     mph = mph+1
-    mphstr=str(mph) + " MPH"
+    mphstr=str(mph) + " MPH Top speed"
     mphlbl.config(text=mphstr)
     timelbl.after(100,update_mph)
     if mph > 0:
@@ -47,9 +48,18 @@ def update_timer(): # Update the timer with new values
 def format_time(seconds): # Format the time for display
     return "{:.2f}s".format(seconds)
 
+def save_top_speed():
+    global top_speed
+    if top_speed < mph:
+        top_speed = mph
+        topspeed_string=str(top_speed) + " MPH "
+        tspdlbl.config(text=topspeed_string)
+        tspdlbl.after(100,save_top_speed)
+
 
 mph=0
 start_time = None
+top_speed=0
 
 z26lbl = Label(window, text="  Zero2Sixty Box", font=("Lato",20), fg="white",bg="black") # Zero2Sixty Box Label
 z26lbl.grid(column=1, row=1, padx=20, pady=20, sticky="w") 
@@ -63,6 +73,8 @@ timelbl.grid(row=1, column=2,padx=20, pady=20, sticky="w")
 mphlbl = Label(window, text="",font=("Lato",60), fg="white",bg="black",width=7) # MPH Label
 mphlbl.grid(row=2,column=1,padx=20,pady=20, sticky="ew")
 
+tspdlbl = Label(window, text="",font=("Lato",30), fg="white",bg="black")
+tspdlbl.grid(row=3,column=1,padx=60,pady=10,sticky="w")
 
 timerlbl = Label(window, text="", font=("Lato",60), fg="white",bg="black")
 timerlbl.grid(row=2,column=2,padx=20,pady=20)
@@ -70,5 +82,6 @@ timerlbl.grid(row=2,column=2,padx=20,pady=20)
 
 update_time() # Call the funtion to update time
 update_mph()
+save_top_speed()
 
 window.mainloop()
