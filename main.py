@@ -18,7 +18,7 @@ def update_time(): # Update the time in the UI
 def update_mph(): # Function to simulate 0-60
     global mph  
     mph = mph+1
-    mphstr=str(mph) + " MPH Top speed"
+    mphstr=str(mph) + " MPH"
     mphlbl.config(text=mphstr)
     timelbl.after(100,update_mph)
     if mph > 0:
@@ -52,7 +52,7 @@ def save_top_speed():
     global top_speed
     if top_speed < mph:
         top_speed = mph
-        topspeed_string=str(top_speed) + " MPH "
+        topspeed_string=str(top_speed) + " MPH Top speed"
         tspdlbl.config(text=topspeed_string)
         tspdlbl.after(100,save_top_speed)
 
