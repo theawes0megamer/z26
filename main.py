@@ -1,6 +1,20 @@
 from tkinter import *
 from datetime import datetime
 import time
+import serial 
+import pynmea2
+from geopy.distance import geodesic  # Install using: pip install geopy
+
+
+serial_port = "/dev/ttyS0"
+baud_rate = 115200
+
+prev_position = None
+prev_time = time.time()
+
+gps_serial = serial.Serial(serial_port, baudrate=baud_rate, timeout=1)
+
+
 
 # create tkinter window
 window = Tk()
@@ -15,10 +29,37 @@ def update_time(): # Update the time in the UI
     timelbl.config(text=time)
     timelbl.after(1000, update_time)
 
-def update_mph(): # Function to simulate 0-60
+def update_mph(): 
     global mph  
-    mph = mph+1
+    global sats
+    mph = 0
     mphstr=str(mph) + " MPH"
+    
+    # GPS INTEGRATION
+    gps_data = gps_serial.readline().decode("utf-8") # read data
+
+    if gps_data.startswith('$GPGGA'):
+        try:
+            gga_sentence = pynmea2.parse(gps_data)
+            sats = gga_sentence.num_sats
+            latitude = gga_sentence.latitude
+            longitude = gga_sentence.longitude
+            current_position = (gga_sentence.latitude, gga_sentence.longitude)
+            current_time = time.time()
+            if prev_position is not None:
+                distance = geodesic(prev_position, current_position).miles
+
+                # Calculate speed (distance / time) in MPH
+                 elapsed_time = current_time - prev_time
+                 speed_mph = distance / elapsed_time * 3600  # Convert to MPH
+                 
+
+
+
+            # Use latitude and longitude data as needed
+        except pynmea2.ParseError as e:
+            print(f"Error parsing GPS data: {e}")
+
     mphlbl.config(text=mphstr)
     timelbl.after(100,update_mph)
     if mph > 0:
@@ -60,6 +101,7 @@ def save_top_speed():
 mph=0
 start_time = None
 top_speed=0
+previous_runs = []
 
 z26lbl = Label(window, text="  Zero2Sixty Box", font=("Lato",20), fg="white",bg="black") # Zero2Sixty Box Label
 z26lbl.grid(column=1, row=1, padx=20, pady=20, sticky="w") 
