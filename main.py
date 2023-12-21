@@ -29,15 +29,14 @@ def update_gps_info(): # number of sats, 2d/3d lock info
                     lock_status = "2D Lock"
                 elif fix_mode == 3:
                     lock_status = "3D Lock"
-        sats = report['satellites']
-        satslbl.config(text=str(sats) + lock_status)
+ #       sats = report['satellites']
+ #       satslbl.config(text=str(sats) + lock_status)
     except StopIteration:
         pass
 
 
 def update_mph(): 
     global mph  
-    mph = 0
     try:
         report = gpsd.next()
         if report['class'] == 'TPV':
