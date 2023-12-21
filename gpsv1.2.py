@@ -1,16 +1,14 @@
-import serial
-import pyubx2
+from serial import Serial
+from pyubx2 import UBXReader
 
-# Replace '/dev/ttyUSB0' with the correct serial port for your GPS device
-serial_port = serial.Serial('/dev/ttyS0', 115200, timeout=1)
-ubr = pyubx2.UBXReader(serial_port)
-
-while True:
-    try:
-        raw_data, parsed_data = ubr.read()
-        if parsed_data and hasattr(parsed_data, 'ground_speed'):  # Adjust the attribute name
-            gspeed = parsed_data.ground_speed  # Adjust the attribute name
-            mph = gspeed * 1.150779
-            print(f"Ground Speed: {mph} mph")
-    except (serial.SerialException, pyubx2.UBXStreamError):
-        pass
+try:
+    stream = Serial('COM8', 38400)
+    while True:
+        ubr = UBXReader(stream)
+        (raw_data, parsed_data) = ubr.read()
+        # print(parsed_data)
+        if parsed_data.identity == "NAV-PVT":
+            lat, lon, alt = parsed_data.lat, parsed_data.lon, parsed_data.hMSL
+            print(f"lat = {lat}, lon = {lon}, alt = {alt/1000} m")
+except KeyboardInterrupt:
+    print("Terminated by user")
