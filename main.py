@@ -39,7 +39,7 @@ def update_mph():
         if parsed_data.identity == "NAV-SOL":
             mph = parsed_data.gSpeed
         
-        print(mph)
+            print(mph)
         #sats=parsed_data['']
     except StopIteration:
         pass
