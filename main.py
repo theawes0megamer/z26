@@ -1,20 +1,7 @@
 from tkinter import *
 from datetime import datetime
 import time
-import serial 
-import pynmea2
-from geopy.distance import geodesic  # Install using: pip install geopy
-
-
-serial_port = "/dev/ttyS0"
-baud_rate = 115200
-
-prev_position = None
-prev_time = time.time()
-
-gps_serial = serial.Serial(serial_port, baudrate=baud_rate, timeout=1)
-
-
+import gps
 
 # create tkinter window
 window = Tk()
@@ -23,6 +10,7 @@ window.geometry('1024x600')
 window.config(bg="black")
 window.title("Zero2Sixty Box")
 
+gpsd = gps.gps(mode=gps.WATCH_ENABLE | gps.WATCH_NEWSTYLE)
 
 def update_time(): # Update the time in the UI
     time = datetime.now().strftime("%B %d, %Y, %I:%M:%S %p")
@@ -33,37 +21,24 @@ def update_mph():
     global mph  
     global sats
     mph = 0
+    try:
+        report = gpsd.next()
+        if report['class'] == 'TPV':
+            if hasattr(report, 'speed'):
+                mph = int(report.speed * 2.23694)  # Convert m/s to MPH
+
+    except StopIteration:
+        pass
     mphstr=str(mph) + " MPH"
     
     # GPS INTEGRATION
-    gps_data = gps_serial.readline().decode("utf-8") # read data
-
-    if gps_data.startswith('$GPGGA'):
-        try:
-            gga_sentence = pynmea2.parse(gps_data)
-            sats = gga_sentence.num_sats
-            latitude = gga_sentence.latitude
-            longitude = gga_sentence.longitude
-            current_position = (gga_sentence.latitude, gga_sentence.longitude)
-            current_time = time.time()
-            if prev_position is not None:
-                distance = geodesic(prev_position, current_position).miles
-
-                # Calculate speed (distance / time) in MPH
-                 elapsed_time = current_time - prev_time
-                 speed_mph = distance / elapsed_time * 3600  # Convert to MPH
-                 
-
-
-
-            # Use latitude and longitude data as needed
-        except pynmea2.ParseError as e:
-            print(f"Error parsing GPS data: {e}")
-
+    
     mphlbl.config(text=mphstr)
     timelbl.after(100,update_mph)
-    if mph > 0:
+    if mph > 1:
         start_timer()
+
+        
 
 
 def start_timer(): # Start the 0-60 MPH timer
