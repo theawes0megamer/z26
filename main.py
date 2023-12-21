@@ -36,7 +36,8 @@ def update_mph():
     try:
         ubr = pyubx2.UBXReader(stream)
         (raw_data,parsed_data) = ubr.read()
-        mph=(parsed_data,'gSpeed')
+        mph=ubr.parse('gspeed')
+        print(mph)
         #sats=parsed_data['']
     except StopIteration:
         pass
