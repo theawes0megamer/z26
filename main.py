@@ -17,9 +17,26 @@ def update_time(): # Update the time in the UI
     timelbl.config(text=time)
     timelbl.after(1000, update_time)
 
+def update_gps_info(): # number of sats, 2d/3d lock info
+    global sats
+    global lock_status
+    try: 
+        report = gpsd.next()
+        if report['class'] == 'TPV':
+            if 'mode' in report:
+                fix_mode = report['mode']
+                if fix_mode == 2:
+                    lock_status = "2D Lock"
+                elif fix_mode == 3:
+                    lock_status = "3D Lock"
+        sats = report['satellites']
+        satslbl.config(text=str(sats) + lock_status)
+    except StopIteration:
+        pass
+
+
 def update_mph(): 
     global mph  
-    global sats
     mph = 0
     try:
         report = gpsd.next()
@@ -30,8 +47,6 @@ def update_mph():
     except StopIteration:
         pass
     mphstr=str(mph) + " MPH"
-    
-    # GPS INTEGRATION
     
     mphlbl.config(text=mphstr)
     timelbl.after(100,update_mph)
@@ -58,6 +73,8 @@ def update_timer(): # Update the timer with new values
         timerlbl.after(10, update_timer)
     elif current_speed > 60 and start_time:
         timerlbl.config(text=format_time(time.time() - start_time))
+    elif current_speed == 0 and start_time > 0: # reset timer when you go below 1mph 
+        start_time=0
     else:
         timerlbl.config(text="")
 
@@ -96,9 +113,14 @@ tspdlbl.grid(row=3,column=1,padx=60,pady=10,sticky="w")
 timerlbl = Label(window, text="", font=("Lato",60), fg="white",bg="black")
 timerlbl.grid(row=2,column=2,padx=20,pady=20)
 
+satslbl = Label(window, text="34 Sats", font=("Lato",20), fg="white",bg="black")
+satslbl.grid(row=3,column=2,sticky="we",padx=10)
 
-update_time() # Call the funtion to update time
+
+
+update_time() 
 update_mph()
 save_top_speed()
+update_gps_info()
 
 window.mainloop()
