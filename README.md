@@ -1,6 +1,1 @@
 ZERO 2 SIXTY
-
-
-REQUIRED LIBRARIES: 
-
-pynmea2
