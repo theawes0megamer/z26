@@ -57,8 +57,8 @@ def update_mph():
 
 
 def start_timer(): # Start the 0-60 MPH timer
-    global mph
     global start_time
+    start_time = None
     
     if mph > 1 and not start_time:
         start_time = time.time()
@@ -83,6 +83,7 @@ def format_time(seconds): # Format the time for display
 
 def save_top_speed():
     global top_speed
+    top_speed=0
     if top_speed < mph:
         top_speed = mph
         topspeed_string=str(top_speed) + " MPH Top speed"
@@ -90,9 +91,6 @@ def save_top_speed():
         tspdlbl.after(100,save_top_speed)
 
 
-mph=0
-start_time = None
-top_speed=0
 previous_runs = []
 
 z26lbl = Label(window, text="  Zero2Sixty Box", font=("Lato",20), fg="white",bg="black") # Zero2Sixty Box Label
