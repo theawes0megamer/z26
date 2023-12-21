@@ -10,7 +10,7 @@ window.geometry('1024x600')
 window.config(bg="black")
 window.title("Zero2Sixty Box")
 
-gpsd = gps.gps(mode=gps.WATCH_ENABLE | gps.WATCH_NEWSTYLE)
+gpsd = gps.gps(mode=gps.WATCH_ENABLE)
 
 def update_time(): # Update the time in the UI
     time = datetime.now().strftime("%B %d, %Y, %I:%M:%S %p")
