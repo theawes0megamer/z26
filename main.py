@@ -1,7 +1,11 @@
 from tkinter import *
 from datetime import datetime
 import time
-import gps
+import serial
+import pyubx2
+
+
+
 
 # create tkinter window
 window = Tk()
@@ -10,7 +14,9 @@ window.geometry('1024x600')
 window.config(bg="black")
 window.title("Zero2Sixty Box")
 
-gpsd = gps.gps(mode=gps.WATCH_ENABLE)
+stream = serial.Serial('/dev/ttyS0', 115200, timeout=3)
+
+
 
 def update_time(): # Update the time in the UI
     time = datetime.now().strftime("%B %d, %Y, %I:%M:%S %p")
@@ -20,29 +26,18 @@ def update_time(): # Update the time in the UI
 def update_gps_info(): # number of sats, 2d/3d lock info
     global sats
     global lock_status
-    try: 
-        report = gpsd.next()
-        if report['class'] == 'TPV':
-            if 'mode' in report:
-                fix_mode = report['mode']
-                if fix_mode == 2:
-                    lock_status = "2D Lock"
-                elif fix_mode == 3:
-                    lock_status = "3D Lock"
+ 
  #       sats = report['satellites']
  #       satslbl.config(text=str(sats) + lock_status)
-    except StopIteration:
-        pass
 
 
 def update_mph(): 
     global mph  
     try:
-        report = gpsd.next()
-        if report['class'] == 'TPV':
-            if hasattr(report, 'speed'):
-                mph = int(report.speed * 2.23694)  # Convert m/s to MPH
-
+        ubr = pyubx2.UBXReader(stream)
+        (raw_data,parsed_data) = ubr.read()
+        mph=parsed_data['gSpeed']
+        #sats=parsed_data['']
     except StopIteration:
         pass
     mphstr=str(mph) + " MPH"
