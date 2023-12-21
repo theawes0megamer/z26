@@ -36,7 +36,9 @@ def update_mph():
     try:
         ubr = pyubx2.UBXReader(stream)
         (raw_data,parsed_data) = ubr.read()
-        mph=parsed_data.gSpeed
+        if parsed_data.identity == "NAV-SOL":
+            mph = parsed_data.gSpeed
+        
         print(mph)
         #sats=parsed_data['']
     except StopIteration:
