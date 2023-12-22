@@ -33,13 +33,12 @@ def update_gps_info(): # number of sats, 2d/3d lock info
 
 def update_mph(): 
     global mph  
+
     try:
         ubr = pyubx2.UBXReader(stream)
         (raw_data,parsed_data) = ubr.read()
         if parsed_data.identity == "NAV-SOL":
             mph = parsed_data.gSpeed
-        
-            print(mph)
         #sats=parsed_data['']
     except StopIteration:
         pass
