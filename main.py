@@ -15,7 +15,7 @@ window.config(bg="black")
 window.title("Zero2Sixty Box")
 
 stream = serial.Serial('/dev/ttyS0', 115200, timeout=3)
-
+mph = 0
 
 
 def update_time(): # Update the time in the UI
