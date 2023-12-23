@@ -26,6 +26,7 @@ def update_time(): # Update the time in the UI
 def update_gps_info(): # number of sats, 2d/3d lock info
     global sats
     global lock_status
+    
  
  #       sats = report['satellites']
  #       satslbl.config(text=str(sats) + lock_status)
@@ -37,9 +38,9 @@ def update_mph():
     try:
         ubr = pyubx2.UBXReader(stream)
         (raw_data,parsed_data) = ubr.read()
-        if parsed_data.identity == "NAV-SOL":
-            mph = parsed_data.gSpeed
-        #sats=parsed_data['']
+        if parsed_data is not None:
+            mph = parsed_data.gSpeed * 2.23694
+            sats = parsed_data.numSV
     except StopIteration:
         pass
     mphstr=str(mph) + " MPH"
