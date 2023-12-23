@@ -39,8 +39,9 @@ def update_mph():
         ubr = pyubx2.UBXReader(stream)
         (raw_data,parsed_data) = ubr.read()
         if parsed_data is not None:
-            mph = parsed_data.gSpeed * 2.23694
-            sats = parsed_data.numSV
+            if hasattr(parsed_data,'gSpeed'):
+                mph = parsed_data.gSpeed * 2.23694
+                #sats = parsed_data.numSV
     except StopIteration:
         pass
     mphstr=str(mph) + " MPH"
