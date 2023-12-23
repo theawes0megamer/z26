@@ -1,5 +1,5 @@
 import time
-from timeit import default_timer
+#from timeit import default_timer
 mph = 0
 for i in range(70):
 	mph = mph + 1
