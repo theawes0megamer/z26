@@ -15,8 +15,6 @@ window.config(bg="black")
 window.title("Zero2Sixty Box")
 
 stream = serial.Serial('/dev/ttyS0', 115200, timeout=3)
-mph = 0
-
 
 def update_time(): # Update the time in the UI
     time = datetime.now().strftime("%B %d, %Y, %I:%M:%S %p")
@@ -81,7 +79,6 @@ def format_time(seconds): # Format the time for display
 
 def save_top_speed():
     global top_speed
-    top_speed=0
     if top_speed < mph:
         top_speed = mph
         topspeed_string=str(top_speed) + " MPH Top speed"
