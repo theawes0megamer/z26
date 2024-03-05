@@ -16,19 +16,40 @@ window.title("Zero2Sixty Box")
 
 stream = serial.Serial('/dev/ttyS0', 115200, timeout=3)
 
+def receive_data():
+    while True:
+        data = ser.read(ser.inWaiting())
+        print("Received data:", data.decode('utf-8'))
+        # Process the data as needed
+
+receive_data()
+
 def update_time(): # Update the time in the UI
     time = datetime.now().strftime("%B %d, %Y, %I:%M:%S %p")
     timelbl.config(text=time)
     timelbl.after(1000, update_time)
 
-def update_gps_info(): # number of sats, 2d/3d lock info
-    global sats
-    global lock_status
+### THIS IS AN EXAMPLE FUNCTION FOR REPORTING THE NUMBER OF SATS IT IS NOT FINISHED!!! ###
+
+# def update_gps_info(): # number of sats, 2d/3d lock info
+#     global sats
+#     global lock_status
     
  
- #       sats = report['satellites']
+#       sats = report['satellites']
  #       satslbl.config(text=str(sats) + lock_status)
+    
 
+def update_gps_info(): # number of sats, 2d/3d lock info
+    global sats, lock_status
+    
+    if stream.inWaiting(): # Check if there is data available from the serial port
+        raw_data = stream.read(stream.inWaiting()) # Read the incoming data from the serial port
+        report = pyubx2.parse(raw_data) # Parse the received UBX messages
+        sats = report['NAV-SOL']['numSV'] if 'NAV-SOL' in report else 0
+        lock_status = '2D' if report['NAV-STATUS']['fixType'] == 1 else '3D'
+    
+    satslbl.config(text=str(sats)) # Update the status label with the number of satellites acquired
 
 def update_mph(): 
     global mph  
