@@ -15,11 +15,6 @@ window.title("Zero2Sixty Box")
 
 stream = serial.Serial('/dev/ttyS0', 115200, timeout=3)
 
-def receive_data():
-    while True:
-        ubr = (pyubx2.ubxreader(stream))
-        (raw_data, parsed_data) = ubr.read()
-        print(parsed_data)
 
 
 def update_time():  # Update the time in the UI
@@ -27,34 +22,33 @@ def update_time():  # Update the time in the UI
     timelbl.config(text=time_str)
     timelbl.after(1000, update_time)
 
-def update_gps_info():  # number of sats, 2d/3d lock info
-    global sats, lock_status
+# def update_gps_info():  # number of sats, 2d/3d lock info
+#     global sats, lock_status
 
-    if stream.inWaiting():  # Check if there is data available from the serial port
-        raw_data = stream.read(stream.inWaiting())  # Read the incoming data from the serial port
-        report = pyubx2.parse(raw_data)  # Parse the received UBX messages
-        if 'NAV-SOL' in report:
-            sats = report['NAV-SOL']['numSV']
-        else:
-            sats = 0
+#     if stream.inWaiting():  # Check if there is data available from the serial port
+#         raw_data = stream.read(stream.inWaiting())  # Read the incoming data from the serial port
+#         report = pyubx2.parse(raw_data)  # Parse the received UBX messages
+#         if 'NAV-SOL' in report:
+#             sats = report['NAV-SOL']['numSV']
+#         else:
+#             sats = 0
 
-        if 'NAV-STATUS' in report:
-            lock_status = '2D' if report['NAV-STATUS']['fixType'] == 1 else '3D'
-        else:
-            lock_status = ''
+#         if 'NAV-STATUS' in report:
+#             lock_status = '2D' if report['NAV-STATUS']['fixType'] == 1 else '3D'
+#         else:
+#             lock_status = ''
 
-    satslbl.config(text=f"{sats} Sats {lock_status}")
+#     satslbl.config(text=f"{sats} Sats {lock_status}")
+global mph
 
 def update_mph():
-    global mph
 
-    try:
-        ubr = pyubx2.UBXReader(stream)
-        (raw_data, parsed_data) = ubr.read()
-        if parsed_data is not None and hasattr(parsed_data, 'gSpeed'):
-            mph = parsed_data.gSpeed * 2.23694
-    except StopIteration:
-        pass
+    ubr = pyubx2.UBXReader(stream)
+    (raw_data, parsed_data) = ubr.read()
+    # if parsed_data is not None and hasattr(parsed_data, 'gSpeed'):
+    #     mph = parsed_data.gSpeed * 2.23694
+    print(parsed_data)
+
 
     mphstr = f"{mph:.1f} MPH"
     mphlbl.config(text=mphstr)
@@ -121,7 +115,7 @@ satslbl.grid(row=3, column=2, sticky="we", padx=10)
 
 update_time()
 update_mph()
-update_gps_info()
-receive_data()
+# update_gps_info()
+
 
 window.mainloop()
