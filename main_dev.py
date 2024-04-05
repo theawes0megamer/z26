@@ -1,6 +1,7 @@
 from tkinter import *
 from datetime import datetime
 import time
+import pyubx2.ubxreader
 import serial
 import pyubx2
 import threading
@@ -16,14 +17,10 @@ stream = serial.Serial('/dev/ttyS0', 115200, timeout=3)
 
 def receive_data():
     while True:
-        if stream.inWaiting():
-            data = stream.read(stream.inWaiting())
-            print("Received data:", data.decode('utf-8'))
-            # Process the data as needed
+        ubr = (pyubx2.ubxreader(stream))
+        (raw_data, parsed_data) = ubr.read()
+        print(parsed_data)
 
-# Start the receive_data function in a separate thread
-receive_thread = threading.Thread(target=receive_data)
-receive_thread.start()
 
 def update_time():  # Update the time in the UI
     time_str = datetime.now().strftime("%B %d, %Y, %I:%M:%S %p")
@@ -125,5 +122,6 @@ satslbl.grid(row=3, column=2, sticky="we", padx=10)
 update_time()
 update_mph()
 update_gps_info()
+receive_data()
 
 window.mainloop()
