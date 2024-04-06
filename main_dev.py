@@ -114,6 +114,7 @@ satslbl.grid(row=3, column=2, sticky="we", padx=10)
 update_time()
 update_mph()
 # update_gps_info()
+window.after(10,update_mph)
 
 
 window.mainloop()
