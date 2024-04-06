@@ -1,10 +1,9 @@
 from tkinter import *
 from datetime import datetime
 import time
-import pyubx2.ubxreader
 import serial
 import pyubx2
-import threading
+
 
 # create tkinter window
 window = Tk()
@@ -43,14 +42,12 @@ global mph
 
 def update_mph():
 
-
-
-
     while True:
         ubr = pyubx2.UBXReader(stream)
         (raw_data, parsed_data) = ubr.read()
-        mph = parsed_data.gSpeed
-
+        print(parsed_data)
+        if parsed_data:
+            mph = parsed_data
 
     # mphstr = f"{mph:.1f} MPH"
     # mphlbl.config(text=mphstr)
