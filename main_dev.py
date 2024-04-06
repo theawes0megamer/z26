@@ -42,12 +42,11 @@ global mph
 
 def update_mph():
 
-    while True:
-        ubr = pyubx2.UBXReader(stream)
-        (raw_data, parsed_data) = ubr.read()
-        print(parsed_data)
-        if parsed_data:
-            mph = parsed_data
+    #while True:
+    ubr = pyubx2.UBXReader(stream)
+    (raw_data, parsed_data) = ubr.read()
+    if parsed_data:
+        mph = parsed_data
 
     # mphstr = f"{mph:.1f} MPH"
     # mphlbl.config(text=mphstr)
