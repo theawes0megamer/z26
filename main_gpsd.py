@@ -62,17 +62,17 @@ global mph
 #     print(parsed_data.speed)
 
 def update_mph():
-    while True:
     
-        mph = session.fix.speed * 2.23693629
+    
+    mph = session.fix.speed * 2.23693629
 
-        mphstr = f"{mph:.2f} MPH"
-        mphlbl.config(text=mphstr)
+    mphstr = f"{mph:.2f} MPH"
+    mphlbl.config(text=mphstr)
     #   save_top_speed()  # Call save_top_speed here instead of after loop
-        timelbl.after(100, update_mph)
+    timelbl.after(100, update_mph)
 
-        if mph > 1:
-            start_timer()
+    if mph > 1:
+        start_timer()
     
 
 def start_timer():  # Start the 0-60 MPH timer
