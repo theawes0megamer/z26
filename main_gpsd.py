@@ -1,5 +1,4 @@
 from tkinter import *
-from datetime import datetime
 import time
 import serial
 import gps
@@ -17,19 +16,20 @@ session = gps.gps(mode=gps.WATCH_ENABLE)
 
 
 def update_time():  # Update the time in the UI
-    time_str = datetime.now().strftime("%B %d, %Y, %I:%M:%S %p")
+    time_str = session.fix.time
     timelbl.config(text=time_str)
     timelbl.after(1000, update_time)
 
 def update_gps_info():
     global sats,lock,sat_lock
-    sats,lock=session.fix.uSat,session.fix.mode
+    sats,lock=session.sky.uSat,session.fix.mode
     if lock == 1:
         sat_lock = "No Lock"
     if lock == 2:
         sat_lock = "2D"
     if lock == 3:
         sat_lock = "3D"
+    
     
     satslbl.config(text=f"{sats} Sats {sat_lock}")
 
