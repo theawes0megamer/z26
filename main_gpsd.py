@@ -64,7 +64,7 @@ global mph
 def update_mph():
 
     while 0 == session.read():
-        print("Lattitude:",session.fix.lattitude)
+        print("Lattitude:",session.lattitude)
 
 def start_timer():  # Start the 0-60 MPH timer
     global start_time
