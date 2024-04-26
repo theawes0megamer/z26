@@ -21,6 +21,18 @@ def update_time():  # Update the time in the UI
     timelbl.config(text=time_str)
     timelbl.after(1000, update_time)
 
+def update_gps_info():
+    global sats,lock,sat_lock
+    sats,lock=session.fix.uSat,session.fix.mode
+    if lock == 1:
+        sat_lock = "No Lock"
+    if lock == 2:
+        sat_lock = "2D"
+    if lock == 3:
+        sat_lock = "3D"
+    
+    satslbl.config(text=f"{sats} Sats {sat_lock}")
+
 # def update_gps_info():  # number of sats, 2d/3d lock info
 #     global sats, lock_status
 
@@ -70,6 +82,7 @@ def update_mph():
     mphlbl.config(text=mphstr)
     #   save_top_speed()  # Call save_top_speed here instead of after loop
     timelbl.after(100, update_mph)
+    print(mph)
 
     if mph > 1:
         start_timer()
@@ -132,7 +145,7 @@ satslbl.grid(row=3, column=2, sticky="we", padx=10)
 
 update_time()
 update_mph()
-# update_gps_info()
+update_gps_info()
 window.after(10,update_mph)
 
 
