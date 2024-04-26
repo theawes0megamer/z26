@@ -40,13 +40,13 @@ def update_time():  # Update the time in the UI
 #     satslbl.config(text=f"{sats} Sats {lock_status}")
 global mph
 
-def update_mph():
+# def update_mph():
 
-    #while True:
-    ubr = pyubx2.UBXReader(stream)
-    (raw_data, parsed_data) = ubr.read()
-    if parsed_data:
-        mph = parsed_data
+#     #while True:
+#     ubr = pyubx2.UBXReader(stream)
+#     (raw_data, parsed_data) = ubr.read()
+#     if parsed_data:
+#         mph = parsed_data
 
     # mphstr = f"{mph:.1f} MPH"
     # mphlbl.config(text=mphstr)
@@ -55,6 +55,11 @@ def update_mph():
 
     # if mph > 1:
     #     start_timer()
+def update_mph(): # Version 2 of function (hopefully works lol)
+    ubr = pyubx2.UBXReader(stream)
+    (raw_data,parsed_data) = ubr.read()
+    print(f"Parsed data: {parsed_data}\n Raw data: {raw_data}")
+    print(ubr.speed)
 
 def start_timer():  # Start the 0-60 MPH timer
     global start_time
