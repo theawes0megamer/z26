@@ -59,7 +59,7 @@ def update_mph(): # Version 2 of function (hopefully works lol)
     ubr = pyubx2.UBXReader(stream)
     (raw_data,parsed_data) = ubr.read()
     print(f"Parsed data: {parsed_data}\n Raw data: {raw_data}")
-    print(ubr.speed)
+    print(parsed_data.speed)
 
 def start_timer():  # Start the 0-60 MPH timer
     global start_time
