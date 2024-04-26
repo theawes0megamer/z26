@@ -17,9 +17,10 @@ window.title("Zero2Sixty Box")
 stream = serial.Serial('/dev/ttyS0', 115200, timeout=3)
 
 def receive_data():
+    
     while True:
         data = ser.read(ser.inWaiting())
-        print("Received data:", data.decode('utf-8'))
+        print("Received data: ", data.decode('utf-8'))
         # Process the data as needed
 
 receive_data()
@@ -51,24 +52,30 @@ def update_gps_info(): # number of sats, 2d/3d lock info
     
     satslbl.config(text=str(sats)) # Update the status label with the number of satellites acquired
 
-def update_mph(): 
-    global mph  
+# def update_mph(): 
+#     global mph  
 
-    try:
-        ubr = pyubx2.UBXReader(stream)
-        (raw_data,parsed_data) = ubr.read()
-        if parsed_data is not None:
-            if hasattr(parsed_data,'gSpeed'):
-                mph = parsed_data.gSpeed * 2.23694
-                #sats = parsed_data.numSV
-    except StopIteration:
-        pass
-    mphstr=str(mph) + " MPH"
+#     try:
+#         ubr = pyubx2.UBXReader(stream)
+#         (raw_data,parsed_data) = ubr.read()
+#         if parsed_data is not None:
+#             if hasattr(parsed_data,'gSpeed'):
+#                 mph = parsed_data.gSpeed * 2.23694
+#                 #sats = parsed_data.numSV
+#     except StopIteration:
+#         pass
+#     mphstr=str(mph) + " MPH"
     
-    mphlbl.config(text=mphstr)
-    timelbl.after(100,update_mph)
-    if mph > 1:
-        start_timer()
+#     mphlbl.config(text=mphstr)
+#     timelbl.after(100,update_mph)
+#     if mph > 1:
+#         start_timer()
+
+def update_mph(): # Version 2 of function (hopefully works lol)
+    ubr = pyubx2.UBXReader(stream)
+    (raw_data,parsed_data) = ubr.read()
+    print(f"Parsed data: {parsed_data}\n Raw data: {raw_data}")
+    print(ubr.speed)
 
         
 
@@ -77,7 +84,7 @@ def start_timer(): # Start the 0-60 MPH timer
     global start_time
     start_time = None
     
-    if mph > 1 and not start_time:
+    if mph > 1 and not start_time: # Gate set at 1MPH due to GPS inaccuracies
         start_time = time.time()
         update_timer()
 
