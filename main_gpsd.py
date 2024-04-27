@@ -2,6 +2,7 @@ from tkinter import *
 import datetime as time
 import gps
 from dateutil import parser
+import time
 
 
 
