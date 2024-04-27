@@ -20,7 +20,7 @@ lock=None
 
 
 def update_time():  # Update the time in the UI
-    time_iso = parser.parse(session.fix.time)
+    time_iso = parser.parse(str(session.fix.time))
     print(time_iso)
     time_str = time_iso.strptime("%B %d, %Y, %I:%M:%S %p")
     timelbl.config(text=time_str)
