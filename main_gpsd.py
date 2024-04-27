@@ -75,13 +75,14 @@ def update_mph():
     global mph
 
     try:
-        if not (gps.MODE_SET & session.valid):
-            return
-        if (gps.isfinite)(session.fix.speed):
-            mph = session.fix.speed * 2.23693629
-            mphstr = f"{mph:.2f} MPH"
-            mphlbl.config(text=mphstr)
-            print(mph)
+        while 0 == session.read():
+            if not (gps.MODE_SET & session.valid):
+                return
+            if (gps.isfinite)(session.fix.speed):
+                mph = session.fix.speed * 2.23693629
+                mphstr = f"{mph:.2f} MPH"
+                mphlbl.config(text=mphstr)
+                print(mph)
                 # if mph > 1:
                 #     start_timer()
         #   save_top_speed()  # Call save_top_speed here instead of after loop
