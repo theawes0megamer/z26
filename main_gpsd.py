@@ -1,6 +1,5 @@
 from tkinter import *
 import time
-import serial
 import gps
 
 
@@ -74,6 +73,7 @@ def update_time():  # Update the time in the UI
 
 def update_mph():
     global mph
+    global start_time
     try:
         while 0 == session.read():
             if not (gps.MODE_SET & session.valid):
@@ -99,9 +99,6 @@ def update_mph():
         
 
 def start_timer():  # Start the 0-60 MPH timer
-    global start_time
-    start_time = None
-
     if mph > 1 and not start_time:
         start_time = time.time()
         update_timer()
