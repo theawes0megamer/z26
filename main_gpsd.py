@@ -12,6 +12,7 @@ window.title("Zero2Sixty Box")
 
 # stream = serial.Serial('/dev/ttyS0', 115200, timeout=3)
 session = gps.gps(mode=gps.WATCH_ENABLE)
+start_time = None
 
 
 def update_time():  # Update the time in the UI
@@ -19,41 +20,9 @@ def update_time():  # Update the time in the UI
     timelbl.config(text=time_str)
     timelbl.after(1000, update_time)
 
-# def update_gps_info():
-#     global sats,lock,sat_lock
-#     sats,lock=session.sky.uSat,session.fix.mode
-#     if lock == 1:
-#         sat_lock = "No Lock"
-#     if lock == 2:
-#         sat_lock = "2D"
-#     if lock == 3:
-#         sat_lock = "3D"
-    
-    
-#     satslbl.config(text=f"{sats} Sats {sat_lock}")
-
-# def update_gps_info():  # number of sats, 2d/3d lock info
-#     global sats, lock_status
-
-#     if stream.inWaiting():  # Check if there is data available from the serial port
-#         raw_data = stream.read(stream.inWaiting())  # Read the incoming data from the serial port
-#         report = pyubx2.parse(raw_data)  # Parse the received UBX messages
-#         if 'NAV-SOL' in report:
-#             sats = report['NAV-SOL']['numSV']
-#         else:
-#             sats = 0
-
-#         if 'NAV-STATUS' in report:
-#             lock_status = '2D' if report['NAV-STATUS']['fixType'] == 1 else '3D'
-#         else:
-#             lock_status = ''
-
-#     satslbl.config(text=f"{sats} Sats {lock_status}")
-
 def update_mph():
     global mph
     global start_time
-    start_time = None
     try:
         while 0 == session.read():
             if not (gps.MODE_SET & session.valid):
@@ -74,7 +43,6 @@ def update_mph():
 
             if mph > 1:
                 start_timer()
-        #   save_top_speed()  # Call save_top_speed here instead of after loop
 
     except KeyboardInterrupt:
         window.after_cancel(update_mph)
@@ -141,7 +109,6 @@ satslbl.grid(row=3, column=2, sticky="we", padx=10)
 
 update_time()
 update_mph()
-# update_gps_info()
 window.after(10,update_mph)
 
 
