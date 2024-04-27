@@ -82,11 +82,9 @@ def update_mph():
                 mph = session.fix.speed * 2.23693629
                 mphstr = f"{mph:.2f} MPH"
                 mphlbl.config(text=mphstr)
-                if mph > 1:
-                    start_timer()
+                # if mph > 1:
+                #     start_timer()
         #   save_top_speed()  # Call save_top_speed here instead of after loop
-        timelbl.after(100, update_mph)
-
 
     except KeyboardInterrupt:
         window.after_cancel(update_mph)
