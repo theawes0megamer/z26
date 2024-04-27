@@ -20,12 +20,13 @@ lock=None
 
 
 def update_time():  # Update the time in the UI
-    if gps.TIME_SET & session.valid:
-        time_iso = parser.parse(str(session.fix.time))
-        print(time_iso)
-        time_str = time_iso.strptime("%B %d, %Y, %I:%M:%S %p")
-        timelbl.config(text=time_str)
-        timelbl.after(100, update_time)
+    # if gps.TIME_SET & session.valid:
+    #     time_iso = parser.parse(str(session.fix.time))  # CODE ISN'T WORKING.. NEED TO PARSE ISO8601 TIME INTO READABLE EG. December 24 2024, 6:15PM
+    #     print(time_iso)
+        # time_str = time_iso.strptime("%B %d, %Y, %I:%M:%S %p")
+    time_str = session.fix.time
+    timelbl.config(text=time_str)
+    timelbl.after(100, update_time)
 
 def update_mph():
     global mph
