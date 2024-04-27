@@ -90,6 +90,7 @@ def update_mph():
         window.after_cancel(update_mph)
         session.close()
         print("Bye bye.")
+        return
     except Exception as e:
         print("Error:", e)
     finally:
