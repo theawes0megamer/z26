@@ -86,8 +86,8 @@ def update_mph():
         # #   save_top_speed()  # Call save_top_speed here instead of after loop
         # timelbl.after(100, update_mph)
 
-        if mph > 1:
-            start_timer()
+        # if mph > 1:
+        #     start_timer()
     except KeyboardInterrupt:
         print("Bye bye.")
         
