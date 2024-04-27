@@ -20,14 +20,12 @@ lock=None
 
 
 def update_time():  # Update the time in the UI
-    if session.fix.time == "nan":
-        pass
-    if session.fix.time != "nan":
+    if gps.TIME_SET & session.valid:
         time_iso = parser.parse(str(session.fix.time))
-    print(time_iso)
-    time_str = time_iso.strptime("%B %d, %Y, %I:%M:%S %p")
-    timelbl.config(text=time_str)
-    timelbl.after(100, update_time)
+        print(time_iso)
+        time_str = time_iso.strptime("%B %d, %Y, %I:%M:%S %p")
+        timelbl.config(text=time_str)
+        timelbl.after(100, update_time)
 
 def update_mph():
     global mph
