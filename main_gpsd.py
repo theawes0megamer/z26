@@ -50,7 +50,6 @@ def update_time():  # Update the time in the UI
 #             lock_status = ''
 
 #     satslbl.config(text=f"{sats} Sats {lock_status}")
-global mph
 
 # def update_mph():
 
@@ -74,6 +73,7 @@ global mph
 #     print(parsed_data.speed)
 
 def update_mph():
+    global mph
     try:
         while 0 == session.read():
             if not (gps.MODE_SET & session.valid):
