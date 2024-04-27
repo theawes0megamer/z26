@@ -42,7 +42,9 @@ def update_mph():
                 satslbl.config(text=f"{sat_lock}")
 
             if mph > 1:
+                print("Before start_timer:", start_time)
                 start_timer()
+                print("After start_timer:", start_time)
 
     except KeyboardInterrupt:
         window.after_cancel(update_mph)
