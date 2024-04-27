@@ -80,6 +80,7 @@ def update_mph():
             mph = session.fix.speed * 2.23693629
             mphstr = f"{mph:.2f} MPH"
             mphlbl.config(text=mphstr)
+            print(mph)
                 # if mph > 1:
                 #     start_timer()
         #   save_top_speed()  # Call save_top_speed here instead of after loop
@@ -92,7 +93,7 @@ def update_mph():
     except Exception as e:
         print("Error:", e)
     finally:
-        window.after(10,update_mph)
+        window.after(100,update_mph)
         
 
 def start_timer():  # Start the 0-60 MPH timer
