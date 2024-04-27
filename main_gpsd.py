@@ -90,6 +90,8 @@ def update_mph():
         #     start_timer()
     except KeyboardInterrupt:
         print("Bye bye.")
+    finally:
+        window.after(10,update_mph)
         
 
 def start_timer():  # Start the 0-60 MPH timer
