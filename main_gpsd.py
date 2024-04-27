@@ -80,15 +80,16 @@ def update_mph():
                 continue
             if (gps.isfinite)(session.fix.speed):
                 mph = session.fix.speed * 2.23693629
-                print(mph)
-        # mphstr = f"{mph:.2f} MPH"
-        # mphlbl.config(text=mphstr)
-        # #   save_top_speed()  # Call save_top_speed here instead of after loop
-        # timelbl.after(100, update_mph)
 
-        # if mph > 1:
-        #     start_timer()
+        mphstr = f"{mph:.2f} MPH"
+        mphlbl.config(text=mphstr)
+        #   save_top_speed()  # Call save_top_speed here instead of after loop
+        timelbl.after(100, update_mph)
+
+        if mph > 1:
+            start_timer()
     except KeyboardInterrupt:
+        raise
         print("Bye bye.")
     finally:
         window.after(10,update_mph)
