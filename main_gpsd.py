@@ -1,6 +1,7 @@
 from tkinter import *
 import datetime as time
 import gps
+from dateutil import parser
 
 
 
@@ -19,9 +20,9 @@ lock=None
 
 
 def update_time():  # Update the time in the UI
-    time_iso = time.fromisoformat(session.fix.time)
+    time_iso = parser.parse(session.fix.time)
     print(time_iso)
-    time_str = time.strptime(time_iso, "%B %d, %Y, %I:%M:%S %p")
+    time_str = time_iso.strptime("%B %d, %Y, %I:%M:%S %p")
     timelbl.config(text=time_str)
     timelbl.after(100, update_time)
 
