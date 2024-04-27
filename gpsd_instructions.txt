@@ -1,0 +1,5 @@
+GPSD INSTRUCTIONS FOR SERIAL INTERFACING
+
+RASPIAN:
+
+Remove 'console=serial0,115200' from /boot/cmdline.txt 
