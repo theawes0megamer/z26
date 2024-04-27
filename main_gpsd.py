@@ -19,7 +19,7 @@ lock=None
 def update_time():  # Update the time in the UI
     time_str = session.fix.time
     timelbl.config(text=time_str)
-    timelbl.after(1000, update_time)
+    timelbl.after(100, update_time)
 
 def update_mph():
     global mph
@@ -69,7 +69,7 @@ def update_timer():  # Update the timer with new values
         elapsed_time = time.time() - start_time
         timer_str = format_time(elapsed_time)
         timerlbl.config(text=timer_str)
-        timerlbl.after(10, update_timer)
+        timerlbl.after(100, update_timer)
     elif current_speed > 60 and start_time:
         timerlbl.config(text=format_time(time.time() - start_time))
     elif current_speed == 0 and start_time:  # reset timer when you go below 1mph
