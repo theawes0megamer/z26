@@ -50,27 +50,6 @@ def update_time():  # Update the time in the UI
 
 #     satslbl.config(text=f"{sats} Sats {lock_status}")
 
-# def update_mph():
-
-#     #while True:
-#     ubr = pyubx2.UBXReader(stream)
-#     (raw_data, parsed_data) = ubr.read()
-#     if parsed_data:
-#         mph = parsed_data
-
-    # mphstr = f"{mph:.1f} MPH"
-    # mphlbl.config(text=mphstr)
-    # save_top_speed()  # Call save_top_speed here instead of after loop
-    # timelbl.after(100, update_mph)
-
-    # if mph > 1:
-    #     start_timer()
-# def update_mph(): # Version 2 of function (hopefully works lol)
-#     ubr = pyubx2.UBXReader(stream)
-#     (raw_data,parsed_data) = ubr.read()
-#     print(f"Parsed data: {parsed_data}\n Raw data: {raw_data}")
-#     print(parsed_data.speed)
-
 def update_mph():
     global mph
     global start_time
@@ -82,7 +61,16 @@ def update_mph():
                 mph = session.fix.speed * 2.23693629
                 mphstr = f"{mph:.2f} MPH"
                 mphlbl.config(text=mphstr)
-                print(mph)
+                lock = session.fix.mode
+                
+            if lock == 1:
+                sat_lock = "No Lock"
+            if lock == 2:
+                sat_lock = "2D"
+            if lock == 3:
+                sat_lock = "3D"
+                satslbl.config(text=f"{sat_lock}")
+
                 if mph > 1:
                     start_timer()
         #   save_top_speed()  # Call save_top_speed here instead of after loop
