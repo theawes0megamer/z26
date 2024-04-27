@@ -73,28 +73,28 @@ def update_time():  # Update the time in the UI
 
 def update_mph():
     global mph
-    while True:
-        try:
-            if not (gps.MODE_SET & session.valid):
-                return
-            if (gps.isfinite)(session.fix.speed):
-                mph = session.fix.speed * 2.23693629
-                mphstr = f"{mph:.2f} MPH"
-                mphlbl.config(text=mphstr)
-                print(mph)
-                    # if mph > 1:
-                    #     start_timer()
-            #   save_top_speed()  # Call save_top_speed here instead of after loop
 
-        except KeyboardInterrupt:
-            window.after_cancel(update_mph)
-            session.close()
-            print("Bye bye.")
+    try:
+        if not (gps.MODE_SET & session.valid):
             return
-        except Exception as e:
-            print("Error:", e)
-        finally:
-            window.after(100,update_mph)
+        if (gps.isfinite)(session.fix.speed):
+            mph = session.fix.speed * 2.23693629
+            mphstr = f"{mph:.2f} MPH"
+            mphlbl.config(text=mphstr)
+            print(mph)
+                # if mph > 1:
+                #     start_timer()
+        #   save_top_speed()  # Call save_top_speed here instead of after loop
+
+    except KeyboardInterrupt:
+        window.after_cancel(update_mph)
+        session.close()
+        print("Bye bye.")
+        return
+    except Exception as e:
+        print("Error:", e)
+    finally:
+        window.after(100,update_mph)
         
 
 def start_timer():  # Start the 0-60 MPH timer
