@@ -71,8 +71,8 @@ def update_mph():
                 sat_lock = "3D"
                 satslbl.config(text=f"{sat_lock}")
 
-                if mph > 1:
-                    start_timer()
+            if mph > 1:
+                start_timer()
         #   save_top_speed()  # Call save_top_speed here instead of after loop
 
     except KeyboardInterrupt:
