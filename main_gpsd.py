@@ -58,11 +58,14 @@ def update_mph():
         
 
 def start_timer():  # Start the 0-60 MPH timer
+    global start_time
     if mph > 1 and not start_time:
         start_time = time.time()
         update_timer()
 
 def update_timer():  # Update the timer with new values
+    global start_time
+    global mph
     current_speed = mph
     if current_speed > 0 and current_speed <= 60:
         elapsed_time = time.time() - start_time
