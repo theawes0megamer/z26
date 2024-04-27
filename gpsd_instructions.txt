@@ -3,3 +3,8 @@ GPSD INSTRUCTIONS FOR SERIAL INTERFACING
 RASPIAN:
 
 Remove 'console=serial0,115200' from /boot/cmdline.txt 
+
+run 'stty -F /dev/ttyS0 speed 115200' (sets baud rate to GPS, may vary depending on what GPS module you have)
+If it says something about it in use, you can stop GPSD by running 'sudo service gpsd stop'
+
+then you can run 'gpsd -s 115200 /dev/ttyS0'
