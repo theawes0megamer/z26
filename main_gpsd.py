@@ -13,6 +13,7 @@ window.title("Zero2Sixty Box")
 # stream = serial.Serial('/dev/ttyS0', 115200, timeout=3)
 session = gps.gps(mode=gps.WATCH_ENABLE)
 start_time = None
+lock=None
 
 
 def update_time():  # Update the time in the UI
