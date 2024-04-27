@@ -17,7 +17,8 @@ lock=None
 
 
 def update_time():  # Update the time in the UI
-    time_str = time.strptime(str(session.fix.time), "%Y-%m-%dT%H:%M:%SZ")
+    time_iso = time.fromisoformat(session.fix.time)
+    time_str = time.strftime(time_iso, "%B %d, %Y, %I:%M:%S %p")
     timelbl.config(text=time_str)
     timelbl.after(100, update_time)
 
