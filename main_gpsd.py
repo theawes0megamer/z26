@@ -20,18 +20,18 @@ def update_time():  # Update the time in the UI
     timelbl.config(text=time_str)
     timelbl.after(1000, update_time)
 
-def update_gps_info():
-    global sats,lock,sat_lock
-    sats,lock=session.sky.uSat,session.fix.mode
-    if lock == 1:
-        sat_lock = "No Lock"
-    if lock == 2:
-        sat_lock = "2D"
-    if lock == 3:
-        sat_lock = "3D"
+# def update_gps_info():
+#     global sats,lock,sat_lock
+#     sats,lock=session.sky.uSat,session.fix.mode
+#     if lock == 1:
+#         sat_lock = "No Lock"
+#     if lock == 2:
+#         sat_lock = "2D"
+#     if lock == 3:
+#         sat_lock = "3D"
     
     
-    satslbl.config(text=f"{sats} Sats {sat_lock}")
+#     satslbl.config(text=f"{sats} Sats {sat_lock}")
 
 # def update_gps_info():  # number of sats, 2d/3d lock info
 #     global sats, lock_status
@@ -74,19 +74,24 @@ global mph
 #     print(parsed_data.speed)
 
 def update_mph():
-    
-    
-    mph = session.fix.speed * 2.23693629
+    try:
+        while 0 == session.read():
+            if not (gps.MODE_SET & session.valid):
+                continue
+            if (gps.isfinite)(session.fix.speed):
+                mph = session.fix.speed * 2.23693629
 
-    mphstr = f"{mph:.2f} MPH"
-    mphlbl.config(text=mphstr)
-    #   save_top_speed()  # Call save_top_speed here instead of after loop
-    timelbl.after(100, update_mph)
-    print(mph)
+        mphstr = f"{mph:.2f} MPH"
+        mphlbl.config(text=mphstr)
+        #   save_top_speed()  # Call save_top_speed here instead of after loop
+        timelbl.after(100, update_mph)
+        print(mph)
 
-    if mph > 1:
-        start_timer()
-    
+        if mph > 1:
+            start_timer()
+    except KeyboardInterrupt:
+        print("Bye bye.")
+        
 
 def start_timer():  # Start the 0-60 MPH timer
     global start_time
@@ -145,7 +150,7 @@ satslbl.grid(row=3, column=2, sticky="we", padx=10)
 
 update_time()
 update_mph()
-update_gps_info()
+# update_gps_info()
 window.after(10,update_mph)
 
 
