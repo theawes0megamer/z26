@@ -1,6 +1,6 @@
 from tkinter import *
 #import datetime as time
-import gps
+import gps # type: ignore
 import time
 
 
