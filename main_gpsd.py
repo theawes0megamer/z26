@@ -89,10 +89,15 @@ top_speed = 0
 
 def save_top_speed():
     global top_speed
+    global mph
     if mph > top_speed:
         top_speed = mph
         topspeed_string = f"{top_speed:.1f} MPH Top speed"
         tspdlbl.config(text=topspeed_string)
+
+def reset_timer():
+    global start_time
+    start_time=0
 
 z26lbl = Label(window, text="  Zero2Sixty Box", font=("Lato", 20), fg="white", bg="black")  # Zero2Sixty Box Label
 z26lbl.grid(column=1, row=1, padx=20, pady=20, sticky="w")
@@ -110,15 +115,18 @@ tspdlbl = Label(window, text="", font=("Lato", 30), fg="white", bg="black")
 tspdlbl.grid(row=3, column=1, padx=60, pady=10, sticky="w")
 
 timerlbl = Label(window, text="", font=("Lato", 60), fg="white", bg="black",width=7)
-timerlbl.grid(row=2, column=2, padx=20, pady=20)
+timerlbl.grid(row=2, column=2, padx=20, pady=20,sticky="w")
 
 satslbl = Label(window, text="", font=("Lato", 20), fg="white", bg="black")
 satslbl.grid(row=3, column=2, sticky="we", padx=10)
 
 verlbl = Label(window,text="v0.1.0-alpha.1", font=("Lato", 20), fg="white", bg="black") # Version Label
 verlbl.grid(row=6, column=1, sticky="w", padx=10)
+
+reset_timer_button = Button(window,text="Reset Timer",command=reset_timer)
+reset_timer_button.grid(row=4,column=2)
 update_time()
-#save_top_speed().after(100)
+window.after(100,save_top_speed)
 window.after(50,update_mph)
 
 
