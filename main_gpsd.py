@@ -1,8 +1,6 @@
 from tkinter import *
 import datetime as time
 import gps
-from dateutil import parser
-import time
 
 
 
@@ -14,7 +12,6 @@ window.geometry('1024x600')
 window.config(bg="black")
 window.title("Zero2Sixty Box")
 
-# stream = serial.Serial('/dev/ttyS0', 115200, timeout=3)
 session = gps.gps(mode=gps.WATCH_ENABLE)
 start_time = None
 lock=None
@@ -118,6 +115,8 @@ timerlbl.grid(row=2, column=2, padx=20, pady=20)
 satslbl = Label(window, text="", font=("Lato", 20), fg="white", bg="black")
 satslbl.grid(row=3, column=2, sticky="we", padx=10)
 
+verlbl = Label(window,text="v0.1.0-alpha.1", font=("Lato", 20), fg="white", bg="black") # Version Label
+verlbl.grid(row=6, column=1, sticky="we", padx=10)
 update_time()
 update_mph()
 window.after(100,update_mph)
