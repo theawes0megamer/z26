@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import ttk
 #import datetime as time
 import gps # type: ignore
 import time
@@ -15,6 +16,9 @@ window.title("Zero2Sixty Box")
 session = gps.gps(mode=gps.WATCH_ENABLE)
 start_time = None
 lock=None
+rbstyle = ttk.Style()
+rbstyle.configure('TButton',font=("Lato",15,'bold'))
+
 
 
 def update_time():  # Update the time in the UI
