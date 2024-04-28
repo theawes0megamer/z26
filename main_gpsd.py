@@ -62,7 +62,7 @@ def update_mph():
 
 def start_timer():  # Start the 0-60 MPH timer
     global start_time
-    if mph > 2 and mph < 3 and not start_time:
+    if mph > 2 and mph < 4 and not start_time:
         start_time = time.time()
         update_timer()
 
