@@ -57,7 +57,7 @@ def update_mph():
     except Exception as e:
         print("Error:", e)
     finally:
-        window.after(100,update_mph)
+        window.after(50,update_mph)
         
 
 def start_timer():  # Start the 0-60 MPH timer
@@ -119,7 +119,7 @@ verlbl = Label(window,text="v0.1.0-alpha.1", font=("Lato", 20), fg="white", bg="
 verlbl.grid(row=6, column=1, sticky="w", padx=10)
 update_time()
 #save_top_speed().after(100)
-window.after(100,update_mph)
+window.after(50,update_mph)
 
 
 window.mainloop()
