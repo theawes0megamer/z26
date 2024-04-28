@@ -1,7 +1,7 @@
 from tkinter import *
-import datetime as time
+#import datetime as time
 import gps
-
+import time
 
 
 
@@ -62,7 +62,7 @@ def update_mph():
 
 def start_timer():  # Start the 0-60 MPH timer
     global start_time
-    if mph > 1 and not start_time:
+    if mph > 2 and mph < 3 and not start_time:
         start_time = time.time()
         update_timer()
 
@@ -103,13 +103,13 @@ timelbl.columnconfigure(1, weight=0)
 timelbl.rowconfigure(1, weight=0)
 timelbl.grid(row=1, column=2, padx=20, pady=20, sticky="w")
 
-mphlbl = Label(window, text="", font=("Lato", 60), fg="white", bg="black", width=7)  # MPH Label
+mphlbl = Label(window, text="", font=("Lato", 60), fg="white", bg="black", width=10)  # MPH Label
 mphlbl.grid(row=2, column=1, padx=20, pady=20, sticky="ew")
 
 tspdlbl = Label(window, text="", font=("Lato", 30), fg="white", bg="black")
 tspdlbl.grid(row=3, column=1, padx=60, pady=10, sticky="w")
 
-timerlbl = Label(window, text="", font=("Lato", 60), fg="white", bg="black")
+timerlbl = Label(window, text="", font=("Lato", 60), fg="white", bg="black",width=7)
 timerlbl.grid(row=2, column=2, padx=20, pady=20)
 
 satslbl = Label(window, text="", font=("Lato", 20), fg="white", bg="black")
