@@ -56,8 +56,8 @@ def update_mph():
         return
     except Exception as e:
         print("Error:", e)
-    finally:
-        window.after(100,update_mph)
+    # finally:
+    #     window.after(100,update_mph)
         
 
 def start_timer():  # Start the 0-60 MPH timer
@@ -118,7 +118,7 @@ satslbl.grid(row=3, column=2, sticky="we", padx=10)
 verlbl = Label(window,text="v0.1.0-alpha.1", font=("Lato", 20), fg="white", bg="black") # Version Label
 verlbl.grid(row=6, column=1, sticky="w", padx=10)
 update_time()
-update_mph()
+save_top_speed().after(100)
 window.after(100,update_mph)
 
 
