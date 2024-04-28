@@ -116,7 +116,7 @@ satslbl = Label(window, text="", font=("Lato", 20), fg="white", bg="black")
 satslbl.grid(row=3, column=2, sticky="we", padx=10)
 
 verlbl = Label(window,text="v0.1.0-alpha.1", font=("Lato", 20), fg="white", bg="black") # Version Label
-verlbl.grid(row=6, column=1, sticky="we", padx=10)
+verlbl.grid(row=6, column=1, sticky="w", padx=10)
 update_time()
 update_mph()
 window.after(100,update_mph)
