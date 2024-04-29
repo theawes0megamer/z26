@@ -124,7 +124,7 @@ timerlbl.grid(row=2, column=2, padx=20, pady=20,sticky="w")
 satslbl = Label(window, text="", font=("Lato", 20), fg="white", bg="black")
 satslbl.grid(row=3, column=2, sticky="we", padx=10)
 
-verlbl = Label(window,text="v0.1.0-alpha.1", font=("Lato", 20), fg="white", bg="black") # Version Label
+verlbl = Label(window,text="v0.1.0-alpha.2", font=("Lato", 20), fg="white", bg="black") # Version Label
 verlbl.grid(row=6, column=1, sticky="w", padx=10)
 
 reset_timer_button = Button(window,text="Reset Timer",command=reset_timer)
