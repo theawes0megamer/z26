@@ -61,7 +61,7 @@ def update_mph():
     except Exception as e:
         print("Error:", e)
     finally:
-        window.after(50,update_mph)
+        window.after(10,update_mph)
         
 
 def start_timer():  # Start the 0-60 MPH timer
@@ -131,7 +131,7 @@ reset_timer_button = Button(window,text="Reset Timer",command=reset_timer)
 reset_timer_button.grid(row=4,column=2)
 update_time()
 window.after(100,save_top_speed)
-window.after(50,update_mph)
+window.after(10,update_mph)
 
 
 window.mainloop()
