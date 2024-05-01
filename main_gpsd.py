@@ -118,13 +118,13 @@ def format_time(seconds):  # Format the time for display
 
 top_speed = 0
 
-def save_top_speed():
-    global top_speed
-    global mph
-    if mph > top_speed:
-        top_speed = mph
-        topspeed_string = f"{top_speed:.1f} {units} Top speed"
-        tspdlbl.config(text=topspeed_string)
+# def save_top_speed():
+#     global top_speed
+#     global mph
+#     if mph > top_speed:
+#         top_speed = mph
+#         topspeed_string = f"{top_speed:.1f} {units} Top speed"
+#         tspdlbl.config(text=topspeed_string)
 
 def reset_timer():
     global start_time
@@ -159,7 +159,7 @@ verlbl.grid(row=6, column=1, sticky="w", padx=10)
 reset_timer_button = Button(window,text="Reset Timer",command=reset_timer)
 reset_timer_button.grid(row=4,column=2)
 update_time()
-window.after(100,save_top_speed)
+# window.after(100,save_top_speed)
 window.after(10,update_mph)
 
 
