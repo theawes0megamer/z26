@@ -37,6 +37,7 @@ def create_config():
 create_config()
 
 global units
+global config
 units = config.get('DEFAULT','units')
 print(units)
 
