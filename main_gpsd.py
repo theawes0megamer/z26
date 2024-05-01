@@ -38,7 +38,7 @@ create_config()
 
 global units
 units = config.get('DEFAULT','units')
-
+print(units)
 
 def update_time():  # Update the time in the UI
     # if gps.TIME_SET & session.valid:
