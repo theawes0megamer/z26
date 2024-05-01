@@ -116,7 +116,7 @@ def update_timer():  # Update the timer with new values
 def format_time(seconds):  # Format the time for display
     return "{:.2f}s".format(seconds)
 
-top_speed = 0
+# top_speed = 0
 
 # def save_top_speed():
 #     global top_speed
