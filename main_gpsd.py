@@ -101,7 +101,7 @@ def update_timer():  # Update the timer with new values
     global elapsed_time
     global config
     current_speed = mph
-    if current_speed > 0 and current_speed < config.get('DEFAULT','acceleration_top_speed'):
+    if current_speed > 0 and current_speed < float(config.get('DEFAULT','acceleration_top_speed')):
         elapsed_time = time.time() - start_time
         timer_str = format_time(elapsed_time)
         timerlbl.config(text=timer_str)
