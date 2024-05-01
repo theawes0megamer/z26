@@ -29,7 +29,7 @@ def create_config():
         print('Config file already exists... skipping')
     if not os.path.exists('config.ini'): # If it doesn't exist, create it with default values
         config['DEFAULT'] = {'units':'MPH # MPH OR KPH',
-                            'acceleration_stop_speed': '60 # do not put any units here, only number',
+                            'acceleration_top_speed': '60 # do not put any units here, only number',
                             'file_path':'runs.csv'}
         with open('config.ini', 'w') as configfile: # Write the config file
             config.write(configfile)
