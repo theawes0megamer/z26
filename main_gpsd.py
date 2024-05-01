@@ -35,7 +35,7 @@ def create_config():
             config.write(configfile)
 
 create_config()
-config.read() # Read config
+config.read('config.ini') # Read config
 global units
 units = config.get('DEFAULT','units')
 print(units)
