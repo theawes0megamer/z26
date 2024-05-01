@@ -20,11 +20,11 @@ start_time = None
 lock=None
 #rbstyle = ttk.Style()
 #rbstyle.configure('TButton',font=("Lato",15,'bold'))
-
+global config
+config = configparser.ConfigParser(inline_comment_prefixes="#")
 
 def create_config():
     global config
-    config = configparser.ConfigParser(inline_comment_prefixes="#")
     if os.path.exists('config.ini'): # If config file already exists, skip creating a new one
         print('Config file already exists... skipping')
     if not os.path.exists('config.ini'): # If it doesn't exist, create it with default values
@@ -37,7 +37,6 @@ def create_config():
 create_config()
 config.read('config.ini') # Read config
 global units
-global config
 units = config.get('DEFAULT','units')
 print(units)
 
