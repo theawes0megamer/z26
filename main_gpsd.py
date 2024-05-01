@@ -18,6 +18,7 @@ window.title("Zero2Sixty Box")
 session = gps.gps(mode=gps.WATCH_ENABLE)
 start_time = None
 lock=None
+config.read() # Read config
 #rbstyle = ttk.Style()
 #rbstyle.configure('TButton',font=("Lato",15,'bold'))
 
@@ -37,7 +38,6 @@ def create_config():
 create_config()
 
 global units
-global config
 units = config.get('DEFAULT','units')
 print(units)
 
