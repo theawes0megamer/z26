@@ -99,6 +99,7 @@ def update_timer():  # Update the timer with new values
     global start_time
     global mph
     global elapsed_time
+    global config
     current_speed = mph
     if current_speed > 0 and current_speed < config.get('DEFAULT','acceleration_top_speed'):
         elapsed_time = time.time() - start_time
