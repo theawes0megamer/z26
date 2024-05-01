@@ -3,6 +3,8 @@ from tkinter import ttk
 #import datetime as time
 import gps # type: ignore
 import time
+import configparser
+import os
 
 
 
@@ -20,6 +22,23 @@ lock=None
 #rbstyle.configure('TButton',font=("Lato",15,'bold'))
 
 
+def create_config():
+    global config
+    config = configparser.ConfigParser(inline_comment_prefixes="#")
+    if os.path.exists('config.ini'): # If config file already exists, skip creating a new one
+        print('Config file already exists... skipping')
+    if not os.path.exists('config.ini'): # If it doesn't exist, create it with default values
+        config['DEFAULT'] = {'units':'MPH # MPH OR KPH',
+                            'acceleration_stop_speed': '60 # do not put any units here, only number',
+                            'file_path':'runs.csv'}
+        with open('config.ini', 'w') as configfile: # Write the config file
+            config.write(configfile)
+
+create_config()
+
+global units
+units = config.get('DEFAULT','units')
+
 
 def update_time():  # Update the time in the UI
     # if gps.TIME_SET & session.valid:
@@ -33,13 +52,19 @@ def update_time():  # Update the time in the UI
 def update_mph():
     global mph
     global start_time
+    global units
     try:
         while 0 == session.read():
             if not (gps.MODE_SET & session.valid):
                 return
             if (gps.isfinite)(session.fix.speed):
-                mph = session.fix.speed * 2.23693629
-                mphstr = f"{mph:.2f} MPH"
+                if units == 'MPH':
+                    mph = session.fix.speed * 2.23693629
+                elif units == 'KPH':
+                    mph = session.fix.speed * 3.6
+                else:
+                    print("Units in config file is misconfigured. Program cannot detect which one is chosen.")
+                mphstr = f"{mph:.2f} {units}"
                 mphlbl.config(text=mphstr)
                 lock = session.fix.mode
                 
@@ -73,13 +98,14 @@ def start_timer():  # Start the 0-60 MPH timer
 def update_timer():  # Update the timer with new values
     global start_time
     global mph
+    global elapsed_time
     current_speed = mph
-    if current_speed > 0 and current_speed <= 60:
+    if current_speed > 0 and current_speed < config.get('DEFAULT','acceleration_top_speed'):
         elapsed_time = time.time() - start_time
         timer_str = format_time(elapsed_time)
         timerlbl.config(text=timer_str)
         timerlbl.after(10, update_timer)
-    elif current_speed > 60 and start_time:
+    elif current_speed >= config.get('DEFAULT','acceleration_top_speed') and start_time:
         timerlbl.config(text=format_time(time.time() - start_time))
     elif current_speed == 0 and start_time:  # reset timer when you go below 1mph
         start_time = 0
@@ -96,12 +122,14 @@ def save_top_speed():
     global mph
     if mph > top_speed:
         top_speed = mph
-        topspeed_string = f"{top_speed:.1f} MPH Top speed"
+        topspeed_string = f"{top_speed:.1f} {units} Top speed"
         tspdlbl.config(text=topspeed_string)
 
 def reset_timer():
     global start_time
+    global elapsed_time
     start_time=0
+    elapsed_time=0
 
 z26lbl = Label(window, text="  Zero2Sixty Box", font=("Lato", 20), fg="white", bg="black")  # Zero2Sixty Box Label
 z26lbl.grid(column=1, row=1, padx=20, pady=20, sticky="w")
