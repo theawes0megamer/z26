@@ -40,6 +40,16 @@ global units
 units = config.get('DEFAULT','units')
 print(units)
 
+
+def save_runs(timer,lat,lon): # Save time, date, top speed, and GPS Coordinates of run
+     # Not using config path for now, using text first
+      # Use global var for 0-60 time
+    with open('runs.txt','a') as runs:
+        runs.write('Time: ',time.time(),"Latitude: ",lat,"Longitude:",lon,"0 -",config.get('DEFAULT','acceleration_top_speed'),":", timer)
+        runs.close()
+
+
+
 def update_time():  # Update the time in the UI
     # if gps.TIME_SET & session.valid:
     #     time_iso = parser.parse(str(session.fix.time))  # CODE ISN'T WORKING.. NEED TO PARSE ISO8601 TIME INTO READABLE EG. December 24 2024, 6:15PM
@@ -53,6 +63,8 @@ def update_mph():
     global mph
     global start_time
     global units
+    global lat 
+    global lon
     try:
         while 0 == session.read():
             if not (gps.MODE_SET & session.valid):
@@ -67,6 +79,8 @@ def update_mph():
                 mphstr = f"{mph:.2f} {units}"
                 mphlbl.config(text=mphstr)
                 lock = session.fix.mode
+            lat = session.fix.latitude
+            lon = session.fix.longitude
                 
             if lock == 1:
                 sat_lock = "No Lock"
@@ -100,6 +114,7 @@ def update_timer():  # Update the timer with new values
     global mph
     global elapsed_time
     global config
+    global timer
     current_speed = mph
     if current_speed > 0 and current_speed < float(config.get('DEFAULT','acceleration_top_speed')):
         elapsed_time = time.time() - start_time
@@ -107,6 +122,7 @@ def update_timer():  # Update the timer with new values
         timerlbl.config(text=timer_str)
         timerlbl.after(10, update_timer)
     elif current_speed >= config.get('DEFAULT','acceleration_top_speed') and start_time:
+        timer = time.time() - start_time
         timerlbl.config(text=format_time(time.time() - start_time))
     elif current_speed == 0 and start_time:  # reset timer when you go below 1mph
         start_time = 0
@@ -158,6 +174,11 @@ verlbl.grid(row=6, column=1, sticky="w", padx=10)
 
 reset_timer_button = Button(window,text="Reset Timer",command=reset_timer)
 reset_timer_button.grid(row=4,column=2)
+
+save_runs_button = Button(window,text="Save Run",command=save_runs(timer,lat,lon))
+save_runs_button.grid(row=4,column=2)
+
+
 update_time()
 # window.after(100,save_top_speed)
 window.after(10,update_mph)
