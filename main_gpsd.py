@@ -183,7 +183,7 @@ reset_timer_button = Button(window,text="Reset Timer",command=reset_timer)
 reset_timer_button.grid(row=4,column=2)
 
 save_runs_button = Button(window,text="Save Run",command=save_runs(timer,lat,lon))
-save_runs_button.grid(row=4,column=2)
+save_runs_button.grid(row=4,column=1)
 
 
 update_time()
