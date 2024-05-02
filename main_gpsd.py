@@ -180,7 +180,7 @@ verlbl = Label(window,text="v0.1.0-alpha.3", font=("Lato", 20), fg="white", bg="
 verlbl.grid(row=6, column=1, sticky="w", padx=10)
 
 reset_timer_button = Button(window,text="Reset Timer",command=reset_timer)
-reset_timer_button.grid(row=4,column=2)
+reset_timer_button.grid(row=4,column=2,padx=20)
 
 save_runs_button = Button(window,text="Save Run",command=save_runs(timer,lat,lon))
 save_runs_button.grid(row=4,column=1)
