@@ -185,6 +185,7 @@ reset_timer_button.grid(row=4,column=2)
 save_runs_button = Button(window,text="Save Run",command=save_runs(timer,lat,lon))
 save_runs_button.grid(row=4,column=1)
 
+window.grid_rowconfigure(4,weight=5)
 
 update_time()
 # window.after(100,save_top_speed)
