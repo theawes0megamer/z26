@@ -18,6 +18,7 @@ window.title("Zero2Sixty Box")
 session = gps.gps(mode=gps.WATCH_ENABLE)
 start_time = None
 lock=None
+global timer
 #rbstyle = ttk.Style()
 #rbstyle.configure('TButton',font=("Lato",15,'bold'))
 global config
