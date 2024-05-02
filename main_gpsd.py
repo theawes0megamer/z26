@@ -51,7 +51,8 @@ def save_runs(timer,lat,lon): # Save time, date, top speed, and GPS Coordinates 
      # Not using config path for now, using text first
       # Use global var for 0-60 time
     with open('runs.txt','a') as runs:
-        runs.write('Time: ',time.time(),"Latitude: ",lat,"Longitude:",lon,"0 -",config.get('DEFAULT','acceleration_top_speed'),":", timer)
+        runstr = 'Time: ',time.time(),"Latitude: ",lat,"Longitude:",lon,"0 -",config.get('DEFAULT','acceleration_top_speed'),":", timer
+        runs.write(runstr)
         runs.close()
 
 
