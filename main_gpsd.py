@@ -19,6 +19,7 @@ session = gps.gps(mode=gps.WATCH_ENABLE)
 start_time = None
 lock=None
 global timer
+timer = None
 #rbstyle = ttk.Style()
 #rbstyle.configure('TButton',font=("Lato",15,'bold'))
 global config
