@@ -51,7 +51,7 @@ def save_runs(timer,lat,lon): # Save time, date, top speed, and GPS Coordinates 
      # Not using config path for now, using text first
       # Use global var for 0-60 time
     with open('runs.txt','a') as runs:
-        runstr = f"Time: {time.time()}, Latitude: {lat}, Longitude: {lon}, 0-{config.get('DEFAULT','acceleration_top_speed')}: {timer}"
+        runstr = f"Time: {time.time()}, Latitude: {lat}, Longitude: {lon}, 0-{config.get('DEFAULT','acceleration_top_speed')}: {timer}\n"
         runs.write(runstr)
         runs.close()
 
@@ -127,7 +127,7 @@ def update_timer():  # Update the timer with new values
         elapsed_time = time.time() - start_time
         timer_str = format_time(elapsed_time)
         timerlbl.config(text=timer_str)
-        timerlbl.after(10, update_timer)
+        timerlbl.after(5, update_timer)
     elif current_speed >= config.get('DEFAULT','acceleration_top_speed') and start_time:
         timer = time.time() - start_time
         timerlbl.config(text=format_time(time.time() - start_time))
@@ -180,7 +180,7 @@ verlbl = Label(window,text="v0.1.0-alpha.3", font=("Lato", 20), fg="white", bg="
 verlbl.grid(row=6, column=1, sticky="w", padx=10)
 
 reset_timer_button = Button(window,text="Reset Timer",command=reset_timer)
-reset_timer_button.grid(row=4,column=2,padx=20)
+reset_timer_button.grid(row=4,column=2)
 
 save_runs_button = Button(window,text="Save Run",command=save_runs(timer,lat,lon))
 save_runs_button.grid(row=4,column=1)
