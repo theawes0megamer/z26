@@ -18,9 +18,6 @@ window.title("Zero2Sixty Box")
 session = gps.gps(mode=gps.WATCH_ENABLE)
 start_time = None
 lock=None
-global timer
-global lat
-global lon
 lat = 0
 lon = 0
 timer = None
@@ -39,12 +36,12 @@ def create_config():
                             'file_path':'runs.csv'}
         with open('config.ini', 'w') as configfile: # Write the config file
             config.write(configfile)
+    
 
 create_config()
 config.read('config.ini') # Read config
 global units
 units = config.get('DEFAULT','units')
-print(units)
 
 
 def save_runs(timer,lat,lon): # Save time, date, top speed, and GPS Coordinates of run
